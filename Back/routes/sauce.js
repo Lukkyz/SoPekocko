@@ -8,5 +8,7 @@ router.post("/", multer, sauceCtrl.create);
 router.get("/:id", sauceCtrl.getOne);
 router.post("/:id/like", sauceCtrl.manageLike);
 router.get("/", sauceCtrl.getAll);
+router.put("/:id", multer, sauceCtrl.modify);
+router.delete("/:id", sauceCtrl.delete);
 
 module.exports = router;

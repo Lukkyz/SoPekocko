@@ -1,4 +1,5 @@
 let Sauce = require("../models/sauce");
+let fs = require("fs");
 
 exports.getAll = (req, res, next) => {
   Sauce.find({}).then((sauces) => {
@@ -28,6 +29,35 @@ exports.create = (req, res, next) => {
       res.status(201).json({ message: "Objet enregistré !" });
     })
     .catch((err) => res.status(400).json({ error }));
+};
+
+exports.modify = (req, res, next) => {
+  let sauceObj = req.file
+    ? {
+        ...JSON.parse(req.body.sauce),
+        imageUrl: `${req.protocol}://${req.get("host")}/images/${
+          req.file.filename
+        }`,
+      }
+    : { ...req.body };
+  Sauce.updateOne({ _id: req.params.id }, { ...sauceObj })
+    .then(() => {
+      res.status(200).json({ message: "La sauce a bien été modifié !" });
+    })
+    .catch((err) => res.status(422).json({ err }));
+};
+
+exports.delete = (req, res, next) => {
+  Sauce.findOne({ _id: req.params.id }).then((sauce) => {
+    let filename = sauce.imageUrl.split("/images")[1];
+    fs.unlink(`images/${filename}`, () => {
+      Sauce.deleteOne({ _id: req.params.id })
+        .then(() => {
+          res.status(200).json({ message: "La sauce a bien été supprimée" });
+        })
+        .catch((err) => res.status(500).json({ err }));
+    });
+  });
 };
 
 exports.manageLike = (req, res, next) => {
