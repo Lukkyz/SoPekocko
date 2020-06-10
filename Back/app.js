@@ -5,7 +5,6 @@ var logger = require("morgan");
 let mongoose = require("mongoose");
 let dotenv = require("dotenv").config();
 let cors = require("cors");
-let User = require("./models/user");
 
 mongoose
   .connect(process.env.MONGO_URI, {
@@ -17,6 +16,7 @@ mongoose
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+let sauceRouter = require("./routes/sauce");
 
 var app = express();
 
@@ -24,10 +24,10 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(cors());
 
-app.use("/", indexRouter);
 app.use("/api/auth", usersRouter);
+app.use("/api/sauces", sauceRouter);
 
 module.exports = app;
