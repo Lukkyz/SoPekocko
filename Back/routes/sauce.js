@@ -3,7 +3,9 @@ var router = express.Router();
 let sauceCtrl = require("../controllers/sauce");
 
 let multer = require("../middleware/multer-config");
+let auth = require("../middleware/auth");
 
+router.use(auth);
 router.post("/", multer, sauceCtrl.create);
 router.get("/:id", sauceCtrl.getOne);
 router.post("/:id/like", sauceCtrl.manageLike);
