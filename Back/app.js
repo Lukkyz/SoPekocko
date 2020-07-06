@@ -5,6 +5,7 @@ var logger = require("morgan");
 let mongoose = require("mongoose");
 let dotenv = require("dotenv").config();
 let cors = require("cors");
+let helmet = require("helmet");
 let rateLimit = require("express-rate-limit");
 
 mongoose
@@ -32,8 +33,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(cors());
-
 app.use(limiter);
+app.use(helmet());
+
 app.use("/api/auth", usersRouter);
 app.use("/api/sauces", sauceRouter);
 
