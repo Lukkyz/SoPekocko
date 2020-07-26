@@ -9,10 +9,14 @@ Construisez une API sécurisée pour une application d'avis gastronomique
 
 ```bash
 cd Back
+npm install
 npm start
 ```
 
+### Client
+
 ```bash
 cd Front
+npm install
 npm start
 ```

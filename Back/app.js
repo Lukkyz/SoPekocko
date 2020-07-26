@@ -22,7 +22,6 @@ let limiter = rateLimit({
   max: 50,
 });
 
-var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 let sauceRouter = require("./routes/sauce");
 
