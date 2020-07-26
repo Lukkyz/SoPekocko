@@ -26,9 +26,9 @@ exports.create = (req, res, next) => {
   sauce
     .save()
     .then(() => {
-      res.status(201).json({ message: "Objet enregistré !" });
+      res.status(201).json({ message: "La sauce a bien été enregistrée" });
     })
-    .catch((err) => res.status(400).json({ error }));
+    .catch((error) => res.status(400).json({ error }));
 };
 
 exports.modify = (req, res, next) => {
